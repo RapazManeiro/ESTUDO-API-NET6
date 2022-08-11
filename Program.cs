@@ -3,15 +3,8 @@
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
-app.MapGet("/", () => "Bem Vindo Lucas!");
-app.MapPost("/", () => new {Name= "Julia Vavlis", Status = "Linda"});
-app.MapGet("/AddHeader", (HttpResponse response) => {
-    response.Headers.Add("Lucas", "Teste");
-    return new {Name= "Julia Vavlis", Status = "Muito Linda"};
-});
-
 app.MapPost("/saveproduct",(Product Product) => {
-    ProductRepository.Add(product);
+    return Product.Code + Product.Name;
 });
 
 app.MapPost("/getproduct/{code}",([FromRoute] string code) => {
@@ -22,7 +15,7 @@ app.Run();
 
 public class Product {
     public string Code { get; set; }
-    public string Nome { get; set; }
+    public string Name { get; set; }
 }
 
 public static class ProductRepository{
